@@ -1,1 +1,25 @@
-<p>Hunger: @Model.GetHungry() Sleepiness: @Model.GetTired() Boredom: @Model.GetBored()</p> 
+@using Tamagotchi.Models;
+@using System.Collections.Generic;
+
+@foreach (Pet myPet in Model)
+{
+  <img src="~/img/@myPet.GetImage()" alt="emotions" />
+    <p>Hunger: @myPet.GetHungry() Sleepiness: @myPet.GetTired() Boredom: @myPet.GetBored()</p>
+
+  <form action="/object/feed/@myPet.GetId()" method="post">
+    <button type="submit" name="feed">Feed</button>
+  </form>
+
+  <form action="/object/nap/@myPet.GetId()" method="post">
+    <button type="submit" name="nap">Nap</button>
+  </form>
+
+  <form action="/object/play/@myPet.GetId()" method="post">
+    <button type="submit" name="play">Play</button>
+  </form>
+
+}
+
+<form action="/object/timepass" method="post">
+  <button type="submit" name="timepass">Time passes...</button>
+</form>

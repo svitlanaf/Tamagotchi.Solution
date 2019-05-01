@@ -9,16 +9,43 @@ namespace Tamagotchi.Controllers
     [HttpPost("/object")]
     public ActionResult Create()
     {
+      Pet.ClearAll();
       Pet myPet = new Pet();
-      return View("Index", myPet);
+      return RedirectToAction("Index");
     }
 
 
     [HttpGet("/object")]
-    public ActionResult Index(Pet pet)
+    public ActionResult Index()
     {
-      return View(pet);
+      List<Pet> allPets = Pet.GetAllPets();
+      return View(allPets);
     }
 
+    [HttpPost("/object/{thingToDo}/{id}")]
+    public ActionResult Update(string thingToDo, int id)
+    {
+      Pet myPet = Pet.Find(id);
+      if(thingToDo == "nap")
+      {
+        myPet.PutToBed();
+      }
+      if(thingToDo == "feed")
+      {
+        myPet.FeedPet();
+      }
+      if(thingToDo == "play")
+      {
+        myPet.PlayWithPet();
+      }
+      return RedirectToAction("Index");
+    }
+
+    [HttpPost("/object/timepass")]
+    public ActionResult Update()
+    {
+      Pet.TimePass();
+      return RedirectToAction("Index");
+    }
   }
 }
