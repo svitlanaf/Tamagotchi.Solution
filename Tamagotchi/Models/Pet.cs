@@ -39,4 +39,30 @@ namespace Tamagotchi.Models
       _bored--;
       }
     }
+
+    public string GetImage()
+    {
+      int average = (_hungry + _tired + _bored)/3;
+      if(_hungry>9 || _tired>9 || _bored>9)
+      {
+        return "dead.png";
+      }
+      if(_hungry==9 || _tired==9 || _bored==9)
+      {
+        return "almost_dead.png";
+      }
+      if(average <= 3)
+      {
+        return "happy.png";
+      }
+      if(average <= 6)
+      {
+        return "ok.png";
+      }
+      if(average >6)
+      {
+        return "upset.png";
+      }
+    }
   }
+}
