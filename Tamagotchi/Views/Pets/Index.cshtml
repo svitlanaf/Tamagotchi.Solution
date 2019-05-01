@@ -3,21 +3,32 @@
 
 @foreach (Pet myPet in Model)
 {
-  <img src="~/img/@myPet.GetImage()" alt="emotions" />
+  @if(myPet.GetIsAlive())
+  {
+    <img src="~/img/@myPet.GetImage()" alt="emotions" />
     <p>Hunger: @myPet.GetHungry() Sleepiness: @myPet.GetTired() Boredom: @myPet.GetBored()</p>
 
-  <form action="/object/feed/@myPet.GetId()" method="post">
-    <button type="submit" name="feed">Feed</button>
-  </form>
+    <form action="/object/feed/@myPet.GetId()" method="post">
+      <button type="submit" name="feed">Feed</button>
+    </form>
 
-  <form action="/object/nap/@myPet.GetId()" method="post">
-    <button type="submit" name="nap">Nap</button>
-  </form>
+    <form action="/object/nap/@myPet.GetId()" method="post">
+      <button type="submit" name="nap">Nap</button>
+    </form>
 
-  <form action="/object/play/@myPet.GetId()" method="post">
-    <button type="submit" name="play">Play</button>
-  </form>
-
+    <form action="/object/play/@myPet.GetId()" method="post">
+      <button type="submit" name="play">Play</button>
+    </form>
+  }
+  else
+  {
+    <img src="~/img/@myPet.GetImage()" alt="emotions" />
+    <p>Hunger: @myPet.GetHungry() Sleepiness: @myPet.GetTired() Boredom: @myPet.GetBored()</p>
+    <p>This pet is dead! Sorry for your loss.</p>
+    <form action="/" method="get">
+      <button type="submit" name="timepass">Start over...</button>
+    </form>
+  }
 }
 
 <form action="/object/timepass" method="post">

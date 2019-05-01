@@ -8,13 +8,19 @@ namespace Tamagotchi.Models
     private int _tired;
     private int _bored;
     private int _id;
-
+    private bool _isAlive = true;
 
     private static List<Pet> _allPets = new List<Pet>{};
 
-    public static List<Pet> GetAllPets()
+    public Pet()
     {
-      return _allPets;
+      _hungry = 5;
+      _tired = 5;
+      _bored = 5;
+
+      _allPets.Add(this);
+
+      _id = _allPets.Count;
     }
 
     public static void ClearAll()
@@ -34,18 +40,13 @@ namespace Tamagotchi.Models
         myPet._hungry++;
         myPet._tired++;
         myPet._bored++;
+        myPet.Kill();
       }
     }
 
-    public Pet()
+    public static List<Pet> GetAllPets()
     {
-      _hungry = 5;
-      _tired = 5;
-      _bored = 5;
-
-      _allPets.Add(this);
-
-      _id = _allPets.Count;
+      return _allPets;
     }
 
     public int GetId()
@@ -68,29 +69,9 @@ namespace Tamagotchi.Models
       return _bored;
     }
 
-    public void FeedPet()
+    public bool GetIsAlive()
     {
-      if (_hungry>0)
-      {
-        _hungry--;
-      }
-
-    }
-
-    public void PutToBed()
-    {
-      if (_tired>0)
-      {
-      _tired--;
-      }
-    }
-
-    public void PlayWithPet()
-    {
-      if (_bored>0)
-      {
-      _bored--;
-      }
+      return _isAlive;
     }
 
     public string GetImage()
@@ -117,5 +98,38 @@ namespace Tamagotchi.Models
         return "upset.png";
       }
     }
+
+    public void Kill()
+    {
+      if(_hungry>9 || _tired>9 || _bored>9)
+      {
+        _isAlive = false;
+      }
+    }
+
+    public void FeedPet()
+    {
+      if (_hungry>0)
+      {
+        _hungry--;
+      }
+    }
+
+    public void PutToBed()
+    {
+      if (_tired>0)
+      {
+      _tired--;
+      }
+    }
+
+    public void PlayWithPet()
+    {
+      if (_bored>0)
+      {
+      _bored--;
+      }
+    }
+
   }
 }
